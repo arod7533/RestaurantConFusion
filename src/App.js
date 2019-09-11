@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './components/MenuComponent';
 import './App.css';
-import { DISHES } from './shared/dishes';
-import DishDetail from './components/DishDetailComponent';
+import './shared/css/custom.css'
+import { DISHES } from './shared/js/dishes';
 
 
 class App extends Component {
@@ -24,7 +24,7 @@ class App extends Component {
           <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
         </div>
       </Navbar>
-      <Menu dishes={this.state.dishes} />
+      <Menu dishes={this.state.dishes}/>
       </div>
     );
   }
