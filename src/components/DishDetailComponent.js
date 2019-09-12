@@ -34,12 +34,6 @@ class DishDetail extends Component {
         var day = d.toLocaleDateString("en-US", {day: "2-digit"});
         var year = d.toLocaleDateString("en-US", {year: "numeric"});
         var fullDate = month + ", " + day + " " + year;
-        console.log(dateString);
-        console.log(d);
-        console.log(month);
-        console.log(day);
-        console.log(year);
-        console.log(fullDate);
         return fullDate;
 
     }
