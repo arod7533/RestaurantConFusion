@@ -19,7 +19,7 @@ function RenderDish({dish}) {
     else {
         return(
             <div></div>
-        )
+        );
     }
 }
 
