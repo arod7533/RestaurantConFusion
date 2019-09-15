@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
-class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    renderDish(dish) {
+    function RenderDish({dish}) {
         if (dish != null) {
             return( 
                 <div key={dish.id} className="col-12 col-md-5 m-1">
@@ -28,7 +23,7 @@ class DishDetail extends Component {
         }
     }
 
-    formatDate(dateString) {
+    function FormatDate(dateString) {
         var d = new Date(dateString.trim());
         var month = d.toLocaleDateString("en-US", {month: "short"});
         var day = d.toLocaleDateString("en-US", {day: "2-digit"});
@@ -38,15 +33,15 @@ class DishDetail extends Component {
 
     }
 
-    renderComments(comments) {
+    function RenderComments({dish}) {
 
-        if (comments != null ) {
+        if (dish != null ) {
         
-        const comment = comments.map((comm) => {
+        const comment = dish.comments.map((comm) => {
             return (
                 <ul className="commList" key={comm.id}>
                     <li>{comm.comment}</li>
-                    <li>--{comm.author}, {this.formatDate(comm.date.substring(0,10))}</li>
+                    <li>--{comm.author}, {FormatDate(comm.date.substring(0,10))}</li>
                 </ul>
             );
         });
@@ -71,15 +66,21 @@ class DishDetail extends Component {
 
 
 
-    render() {
+
+    const DishDetail = (props) => {
         return(
-            <div className="row">
-                {this.renderDish(this.props.selectedDish)}
-                {this.renderComments(this.props.comments)}
+            <div className="container">
+                <div className="row">
+                    <RenderDish dish={props.dish} />
+                    <RenderComments dish={props.dish} />
+                </div>
             </div>
-        );
-    }
-}
+            );
+
+        
+    }    
+        
+    
     
 
 
