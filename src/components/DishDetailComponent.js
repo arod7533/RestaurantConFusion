@@ -2,6 +2,9 @@ import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+
+
+
 function RenderDish({dish}) {
     if (dish != null) {
         return ( 
@@ -34,7 +37,6 @@ function FormatDate(dateString) {
 }
 
 function RenderComments({comments}) {
-
     if (comments != null ) {
         return (
             <div className="col-12 col-md-5 m-1">
@@ -59,8 +61,8 @@ function RenderComments({comments}) {
     }
 }
 
-const DishDetail = (props) => {
-    if (props.dish != null) {
+const DishDetail = (props) => {    
+    if (props.dish != null ) {
         return(
             <div className="container">
                 <div className="row">
@@ -79,15 +81,12 @@ const DishDetail = (props) => {
                     </div>
             </div>
         );
-    
     }
     else {
         return (
             <div>None</div>
         );
     }
-    
-
 }    
         
 export default DishDetail;
