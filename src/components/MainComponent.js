@@ -4,6 +4,7 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import About from './AboutComponent';
 import DishDetail from './DishDetailComponent';
 import '../shared/css/custom.css'
 import { DISHES } from '../shared/js/dishes';
@@ -11,6 +12,7 @@ import { COMMENTS } from '../shared/js/comments';
 import { LEADERS } from '../shared/js/leaders';
 import { PROMOTIONS } from '../shared/js/promotions';
 import { Switch, Route, Redirect } from 'react-router-dom';
+
 
 
 class Main extends Component {
@@ -42,11 +44,18 @@ class Main extends Component {
       );
     }
 
+    const AboutPage = () => {
+      return (
+        <About leaders = {this.state.leaders} />
+      );
+    }
+
     return (
       <div className="App">
         <Header />
           <Switch>
             <Route path="/home" component={HomePage} />
+            <Route exact path="/aboutus" component={AboutPage} />
             <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes} /> }/>
             <Route path="/menu/:dishid" component={DishWithID} />
             <Route exact path="/contactus" component={Contact} />
