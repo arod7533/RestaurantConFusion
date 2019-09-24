@@ -3,28 +3,36 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 
 
-function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
+function RenderLeaders ({leaders}) {
+    if (leaders != null) {
         return (
-            <div className="row m-2">
-                <Media className="mr-5 mt-2">
-                    <Media object src={leader.image} alt="" className="mediaImg"/>
-                </Media>
-                <Media body>
-                    <h5>
-                        {leader.name}
-                    </h5>
-                    <h6>
-                        {leader.designation}
-                    </h6>
-                    <p>
-                        {leader.description}
-                    </p>
-                </Media>
-            </ div>
+            <>
+                {leaders.map((leader) => {
+                    return (
+                        <div key={leader.id} className="row m-2">
+                            <Media className="mr-5 mt-2">
+                                <Media object src={leader.image} alt="" className="mediaImg"/>
+                            </Media>
+                            <Media body>
+                                <h5>
+                                    {leader.name}
+                                </h5>
+                                <h6>
+                                    {leader.designation}
+                                </h6>
+                                <p>
+                                    {leader.description}
+                                </p>
+                            </Media>
+                        </ div>
+                    );
+                })}
+            </>
         );
-    });
+    }
+}
+
+function About(props) {
 
     return(
         <div className="container">
@@ -82,7 +90,7 @@ function About(props) {
                 </div>
                 <div className="col-12 text-left">
                     <Media list>
-                        {leaders}
+                        <RenderLeaders leaders={props.leaders} />
                     </Media>
                 </div>
             </div>
