@@ -1,8 +1,13 @@
-import { Button, Modal, ModalHeader, ModalBody, FormGroup, Input, Label, Form, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Label, Row } from 'reactstrap';
 import React, { Component } from 'react';
-import { Control } from 'react-redux-form';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
+
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => (val) && (val.length >= len);
+const required = (val) => val && val.length;
 class ComponentForm extends Component {
+
 
     constructor(props) {
         super(props);
@@ -12,6 +17,7 @@ class ComponentForm extends Component {
         }
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleNav() {
@@ -26,6 +32,11 @@ class ComponentForm extends Component {
         });
     }
 
+    handleSubmit(values) {
+        console.log("Current State is: " + JSON.stringify(values));
+        alert("Current State is: " + JSON.stringify(values));
+    }
+
     render() {
         return(
             <>
@@ -35,31 +46,48 @@ class ComponentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <Form>
-                            <FormGroup>
-                                <Label htmlFor="rating">Rating</Label>
-                                <Input type="select" id="rating" name="rating">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="name">Your Name</Label>
-                                <Input type="text" id="name" name="name" />                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="comment">Comment</Label>
-                                <Col className="p-0">
+                        <div className="col-auto">
+                            <LocalForm onSubmit={(values) => {this.handleSubmit(values)}}>
+                                <Row className="form-group">    
+                                    <Label htmlFor="rating">Rating</Label>
+                                    <Control.select model=".rating" id="rating" name="rating" className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </Control.select>
+                                </Row>
+                                <Row className="form-group"> 
+                                    <Label htmlFor="name">Your Name</Label>
+                                    <Control.text model=".name" id="name" name="name" className="form-control"
+                                    validators = {{
+                                        required, 
+                                        minLength: minLength(3), 
+                                        maxLength: maxLength(15)
+                                    }}
+                                    />    
+                                    <Errors 
+                                        className="text-danger"
+                                        model=".name"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            minLength: 'Must be greater than 2 characters',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                    />                        
+                                </Row>
+                                <Row className="form-group"> 
+                                    <Label htmlFor="comment">Comment</Label>
                                     <Control.textarea model=".message" id="comment" name="comment"
                                         rows="6"
                                         className="form-control"
                                         />
-                                </Col>
-                            </FormGroup>
-                            <Button type="submit" value="submit" className="bg-primary">Login</Button>
-                        </Form>
+                                </Row>
+                                <Button type="submit" value="submit" className="bg-primary">Submit Comment</Button>
+                            </LocalForm>
+                        </div>
                     </ModalBody>
                 </Modal>   
             </>
